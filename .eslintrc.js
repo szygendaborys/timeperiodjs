@@ -24,6 +24,8 @@ module.exports = {
     // e.g. "@typescript-eslint/explicit-function-return-type": "off"
     "no-debugger": "off",
     "no-console": 0,
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "prettier/prettier": ["off"]
+
   },
 };

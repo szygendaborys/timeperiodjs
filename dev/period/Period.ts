@@ -1,10 +1,17 @@
-export default class Period {
-  private _from: Date;
+import Duration from "../duration/Duration";
+import IPeriod from "./interfaces/IPeriod";
 
-  private _to: Date;
+export default class Period extends IPeriod {
 
-  constructor(from: Date, to: Date) {
-    this._from = new Date(from);
-    this._to = new Date(to);
+  public get start(): Date {
+    return new Date(this._start);
+  }
+
+  public get end(): Date {
+    return new Date(this._end);
+  }
+
+  public get duration(): Duration {
+    return new Duration(this._end.getTime() - this._start.getTime());
   }
 }
