@@ -1,0 +1,16 @@
+{
+  "name": "timeperiodjs",
+  "version": "0.0.1",
+  "description": "Time Period Library",
+  "scripts": {
+    "test": "test",
+    "tsc": "tsc"
+  },
+  "keywords": [
+    "time",
+    "date",
+    "period"
+  ],
+  "author": "Borys Szygenda",
+  "license": "ISC"
+}
