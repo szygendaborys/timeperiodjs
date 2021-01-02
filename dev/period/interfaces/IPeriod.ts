@@ -1,3 +1,6 @@
+/* eslint-disable import/no-cycle */
+import Period from "../Period";
+
 export default abstract class IPeriod {
     protected readonly _start: Date;
 
@@ -8,8 +11,13 @@ export default abstract class IPeriod {
         this._end = new Date(end);
     }
 
-    public getOverlappingDates(...dates: Date[]): Date[] {
+    public getOverlappingDates(dates: Date[]): Date[] {
         return dates.filter(date => date >= this._start && date <= this._end);
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    public getOverlappingPeriods(periods: Period[]): Period[] {
+        return periods.filter(period => period.end >= this._start && period.start <= this._end);
     }
 
 }

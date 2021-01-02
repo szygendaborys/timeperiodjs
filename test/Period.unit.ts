@@ -1,8 +1,8 @@
-// import sinon from "sinon";
 import "mocha";
 import { expect } from 'chai';
 import Period from "../dev/period/Period";
 import Duration from "../dev/duration/Duration";
+import PeriodDateSorter from "../dev/period/sorters/PeriodDateSorter";
 
 describe("Period unit tests", () => {
 
@@ -47,7 +47,63 @@ describe("Period unit tests", () => {
                 new Date(2020, 1, 1)
             ];
 
-            expect(period.getOverlappingDates(...datesToFilter)).to.be.length(2);
+            expect(period.getOverlappingDates(datesToFilter)).to.be.length(2);
+        })
+    })
+
+    describe("Period sorting methods", () => {
+
+        it("should sort ascending by the start date", () => {
+            const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
+
+            expect(sorter.sort()).to.be.length(require('./mock/periods.mock').default.length);
+            expect(sorter.periods).to.be.equal(sorter.sort());
+            expect(sorter.periods[0].start.getDate()).to.be.equal(1);
+
+            let lastEl = sorter.periods[0].start;
+            sorter.periods.forEach(period => {
+                expect(period.start.getTime()).to.be.gte(lastEl.getTime());
+                lastEl = period.start;
+            });
+        })
+
+        it("should sort descending by the start date", () => {
+            const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
+
+            expect(sorter.sort(true)).to.be.length(require('./mock/periods.mock').default.length);
+            expect(sorter.periods).to.be.equal(sorter.sort(true));
+
+            let lastEl = sorter.periods[0].start;
+            sorter.periods.forEach(period => {
+                expect(period.start.getTime()).to.be.lte(lastEl.getTime());
+                lastEl = period.start;
+            });
+        })
+
+        it("should sort ascending by the end date", () => {
+            const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
+
+            expect(sorter.sort(false, true)).to.be.length(require('./mock/periods.mock').default.length);
+            expect(sorter.periods).to.be.equal(sorter.sort(false, true));
+
+            let lastEl = sorter.periods[0].start;
+            sorter.periods.forEach(period => {
+                expect(period.end.getTime()).to.be.gte(lastEl.getTime());
+                lastEl = period.end;
+            });
+        })
+
+        it("should sort descending by the end date", () => {
+            const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
+
+            expect(sorter.sort(true, true)).to.be.length(require('./mock/periods.mock').default.length);
+            expect(sorter.periods).to.be.equal(sorter.sort(true, true));
+
+            let lastEl = sorter.periods[0].end;
+            sorter.periods.forEach(period => {
+                expect(period.end.getTime()).to.be.lte(lastEl.getTime());
+                lastEl = period.end;
+            });
         })
     })
 });

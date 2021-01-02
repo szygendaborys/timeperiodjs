@@ -25,7 +25,10 @@ module.exports = {
     "no-debugger": "off",
     "no-console": 0,
     "no-underscore-dangle": "off",
-    "prettier/prettier": ["off"]
+    "prettier/prettier": ["off"],
+    "@typescript-eslint/no-var-requires": "off",
+    "global-require": "off",
+    "import/no-cycle": "off",
 
   },
 };
