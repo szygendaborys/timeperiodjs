@@ -49,6 +49,24 @@ describe("Period unit tests", () => {
 
             expect(period.getOverlappingDates(datesToFilter)).to.be.length(2);
         })
+
+        it("should filter the period list correctly", () => {
+            const period = new Period(new Date(2020, 1, 1), new Date(2020, 1, 3));
+            const overlappingPeriods = period.getOverlappingPeriods(require('./mock/periods.mock').default);
+
+            expect(overlappingPeriods).to.be.length(3);
+
+            console.log(overlappingPeriods);
+
+        })
+
+        it("should not filter the period list correctly", () => {
+            const period = new Period(new Date(2020, 1, 1), new Date('asd'));
+            const overlappingPeriods = period.getOverlappingPeriods(require('./mock/periods.mock').default);
+
+            expect(overlappingPeriods).to.be.length(0);
+
+        })
     })
 
     describe("Period sorting methods", () => {
