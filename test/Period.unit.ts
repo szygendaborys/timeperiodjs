@@ -57,9 +57,6 @@ describe("Period unit tests", () => {
             const overlappingPeriods = period.getOverlappingPeriods(require('./mock/periods.mock').default);
 
             expect(overlappingPeriods).to.be.length(3);
-
-            console.log(overlappingPeriods);
-
         })
 
         it("should not filter the period list correctly", () => {
@@ -67,7 +64,6 @@ describe("Period unit tests", () => {
             const overlappingPeriods = period.getOverlappingPeriods(require('./mock/periods.mock').default);
 
             expect(overlappingPeriods).to.be.length(0);
-
         })
 
         it('should filter periods properly (full overlap only conf)', () => {

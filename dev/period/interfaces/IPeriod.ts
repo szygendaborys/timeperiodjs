@@ -4,6 +4,7 @@ import Duration from "../../duration/Duration";
 import DateFilter from "../filters/DateFilter";
 import Period from "../Period";
 import { PeriodComparisonStatuses } from "../PeriodConstants";
+import PeriodTimeChanger from "../PeriodTimeChanger";
 import DateSorter from "../sorters/DateSorter";
 import IPeriodComparison from "./IPeriodComparison";
 
@@ -11,6 +12,7 @@ export interface PeriodDTO {
     start: Date;
     end: Date;
     duration: Duration;
+    change: PeriodTimeChanger;
 }
 
 export interface IPeriodOverlappingConf {
@@ -22,9 +24,12 @@ export default abstract class IPeriod {
 
     protected readonly _end: Date;
 
+    protected readonly _timeChanger: PeriodTimeChanger;
+
     constructor(start: Date, end: Date) {
         this._start = new Date(start);
         this._end = new Date(end);
+        this._timeChanger = new PeriodTimeChanger(this._start, this._end);
     }
 
     public getDates(): Date[] {
