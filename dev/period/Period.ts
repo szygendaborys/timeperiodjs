@@ -1,7 +1,7 @@
 import Duration from "../duration/Duration";
-import IPeriod from "./interfaces/IPeriod";
+import IPeriod, { PeriodDTO } from "./interfaces/IPeriod";
 
-export default class Period extends IPeriod {
+export default class Period extends IPeriod implements PeriodDTO {
 
   public get start(): Date {
     return new Date(this._start);

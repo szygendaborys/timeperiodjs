@@ -29,6 +29,7 @@ module.exports = {
     "@typescript-eslint/no-var-requires": "off",
     "global-require": "off",
     "import/no-cycle": "off",
+    "no-plusplus": "off"
 
   },
 };

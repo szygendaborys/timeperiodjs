@@ -1,6 +1,6 @@
 import { ISorter, Sorter } from "../interfaces/ISorter";
 import Period from "../Period";
-import { PeriodDateTypes, SortingMethods } from "../PeriodConstants.";
+import { PeriodDateTypes, SortingMethods } from "../PeriodConstants";
 
 export default class PeriodDateSorter extends Sorter implements ISorter {
 

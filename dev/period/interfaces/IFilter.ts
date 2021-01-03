@@ -1,10 +1,10 @@
 import Period from "../Period";
 
-export interface ISorter {
-    sort(): Period[] | Date[]
+export interface IFilter {
+    filter(): Period[] | Date[]
 }
 
-export abstract class Sorter {
+export abstract class Filter {
     protected _periods: Period[] = [];
 
     protected _dates: Date[] = [];
@@ -20,13 +20,5 @@ export abstract class Sorter {
 
     public get dates(): Date[] {
         return [...this._dates];
-    }
-
-    protected static sortAscending(firstVal: number, secondVal: number): number {
-        return firstVal - secondVal;
-    }
-
-    protected static sortDescending(firstVal: number, secondVal: number): number {
-        return secondVal - firstVal;
     }
 }

@@ -1,5 +1,21 @@
+
 /* eslint-disable import/no-cycle */
+import Duration from "../../duration/Duration";
+import DateFilter from "../filters/DateFilter";
 import Period from "../Period";
+import { PeriodComparisonStatuses } from "../PeriodConstants";
+import DateSorter from "../sorters/DateSorter";
+import IPeriodComparison from "./IPeriodComparison";
+
+export interface PeriodDTO {
+    start: Date;
+    end: Date;
+    duration: Duration;
+}
+
+export interface IPeriodOverlappingConf {
+    onlyFullOverlaps?: boolean
+}
 
 export default abstract class IPeriod {
     protected readonly _start: Date;
@@ -11,13 +27,61 @@ export default abstract class IPeriod {
         this._end = new Date(end);
     }
 
+    public getDates(): Date[] {
+        return [new Date(this._start), new Date(this._end)];
+    }
+
     public getOverlappingDates(dates: Date[]): Date[] {
         return dates.filter(date => date >= this._start && date <= this._end);
     }
 
+    public isDateOverlapping(date: Date): boolean {
+        return this.getOverlappingDates([date]).length > 0;
+    }
+
+    public isPeriodOverlapping(period: Period, conf?: IPeriodOverlappingConf): boolean {
+        return this.getOverlappingPeriods([period], conf).length > 0;
+    }
+
     // eslint-disable-next-line class-methods-use-this
-    public getOverlappingPeriods(periods: Period[]): Period[] {
+    public getOverlappingPeriods(periods: Period[], conf?: IPeriodOverlappingConf): Period[] {
+        if (conf?.onlyFullOverlaps) {
+            return periods.filter(period => period.start >= this._start && period.end <= this._end);
+        }
+
         return periods.filter(period => period.end >= this._start && period.start <= this._end);
+    }
+
+    public comparePeriod(period: Period): IPeriodComparison[] {
+        const periodComparisonsDTO: IPeriodComparison[] = [];
+        const allDates = new DateSorter([...this.getDates(), ...period.getDates()]).sort();
+        const dates = new DateFilter(allDates).filterDuplicates();
+
+        const conf: IPeriodOverlappingConf = {
+            onlyFullOverlaps: true,
+        }
+
+        let lastEntry: Date | undefined;
+
+        for (let i = 0; i < dates.length; i++) {
+            const date = dates[i];
+            if (lastEntry) {
+                const tempPeriod = new Period(lastEntry, date);
+                const periodComparisonDTO: IPeriodComparison = {
+                    status: PeriodComparisonStatuses.EXACT,
+                    start: tempPeriod.start,
+                    end: tempPeriod.end
+                };
+
+                if (this.isPeriodOverlapping(tempPeriod, conf) && !period.isPeriodOverlapping(tempPeriod, conf)) periodComparisonDTO.status = PeriodComparisonStatuses.REMOVED;
+                else if (!this.isPeriodOverlapping(tempPeriod, conf) && period.isPeriodOverlapping(tempPeriod, conf)) periodComparisonDTO.status = PeriodComparisonStatuses.ADDED;
+
+                periodComparisonsDTO.push(periodComparisonDTO);
+            }
+            lastEntry = new Date(date);
+        }
+
+        return periodComparisonsDTO;
     }
 
 }

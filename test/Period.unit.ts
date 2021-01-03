@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import Period from "../dev/period/Period";
 import Duration from "../dev/duration/Duration";
 import PeriodDateSorter from "../dev/period/sorters/PeriodDateSorter";
+import { IPeriodOverlappingConf } from "../dev/period/interfaces/IPeriod";
+import { PeriodComparisonStatuses } from "../dev/period/PeriodConstants";
 
 describe("Period unit tests", () => {
 
@@ -67,6 +69,21 @@ describe("Period unit tests", () => {
             expect(overlappingPeriods).to.be.length(0);
 
         })
+
+        it('should filter periods properly (full overlap only conf)', () => {
+            const conf: IPeriodOverlappingConf = {
+                onlyFullOverlaps: true
+            };
+
+            const period1 = new Period(new Date(2020, 1, 1), new Date(2020, 11, 1));
+            const period2 = new Period(new Date(2020, 2, 1), new Date(2020, 4, 3));
+            const period3 = new Period(new Date(2021, 1, 1), new Date(2022, 1, 3));
+
+            const result = period1.getOverlappingPeriods([period2, period3], conf);
+
+            expect(result).to.be.length(1);
+            expect(result[0].start.getTime()).to.equal(period2.start.getTime());
+        });
     })
 
     describe("Period sorting methods", () => {
@@ -75,7 +92,7 @@ describe("Period unit tests", () => {
             const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
 
             expect(sorter.sort()).to.be.length(require('./mock/periods.mock').default.length);
-            expect(sorter.periods).to.be.equal(sorter.sort());
+            expect(sorter.periods).to.not.be.equal(sorter.sort());
             expect(sorter.periods[0].start.getDate()).to.be.equal(1);
 
             let lastEl = sorter.periods[0].start;
@@ -89,7 +106,7 @@ describe("Period unit tests", () => {
             const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
 
             expect(sorter.sort(true)).to.be.length(require('./mock/periods.mock').default.length);
-            expect(sorter.periods).to.be.equal(sorter.sort(true));
+            expect(sorter.periods).to.not.be.equal(sorter.sort(true));
 
             let lastEl = sorter.periods[0].start;
             sorter.periods.forEach(period => {
@@ -102,7 +119,7 @@ describe("Period unit tests", () => {
             const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
 
             expect(sorter.sort(false, true)).to.be.length(require('./mock/periods.mock').default.length);
-            expect(sorter.periods).to.be.equal(sorter.sort(false, true));
+            expect(sorter.periods).to.not.be.equal(sorter.sort(false, true));
 
             let lastEl = sorter.periods[0].start;
             sorter.periods.forEach(period => {
@@ -115,7 +132,7 @@ describe("Period unit tests", () => {
             const sorter = new PeriodDateSorter(require('./mock/periods.mock').default);
 
             expect(sorter.sort(true, true)).to.be.length(require('./mock/periods.mock').default.length);
-            expect(sorter.periods).to.be.equal(sorter.sort(true, true));
+            expect(sorter.periods).to.not.be.equal(sorter.sort(true, true));
 
             let lastEl = sorter.periods[0].end;
             sorter.periods.forEach(period => {
@@ -123,5 +140,34 @@ describe("Period unit tests", () => {
                 lastEl = period.end;
             });
         })
+    })
+
+    describe("Period comparison methods", () => {
+
+        it("should return an array of 3 single comparison types", () => {
+            const period1 = new Period(new Date(2020, 1, 1), new Date(2020, 5, 1));
+            const period2 = new Period(new Date(2020, 2, 1), new Date(2021, 1, 1));
+
+            const comparisonResult = period1.comparePeriod(period2)
+
+            expect(comparisonResult).to.be.length(3);
+            expect(comparisonResult[0]).to.have.property('status', PeriodComparisonStatuses.REMOVED);
+            expect(comparisonResult[1]).to.have.property('status', PeriodComparisonStatuses.EXACT);
+            expect(comparisonResult[2]).to.have.property('status', PeriodComparisonStatuses.ADDED);
+
+        });
+
+        it("should return an array of 1 single comparison type", () => {
+            const period1 = new Period(new Date(2020, 1, 1), new Date(2020, 5, 1));
+            const period2 = new Period(new Date(2020, 1, 1), new Date(2020, 5, 1));
+
+            const comparisonResult = period1.comparePeriod(period2)
+
+            expect(comparisonResult).to.be.length(1);
+            expect(comparisonResult[0].start.getTime()).to.equal(new Date(2020, 1, 1).getTime());
+            expect(comparisonResult[0].end.getTime()).to.equal(new Date(2020, 5, 1).getTime());
+
+        });
+
     })
 });

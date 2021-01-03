@@ -8,7 +8,14 @@ export enum PeriodDateTypes {
     END = 'end'
 }
 
+export enum PeriodComparisonStatuses {
+    REMOVED = -1,
+    EXACT = 0,
+    ADDED = 1
+}
+
 export default {
     SortingMethods,
-    PeriodDateTypes
+    PeriodDateTypes,
+    PeriodComparisonStatuses
 }
