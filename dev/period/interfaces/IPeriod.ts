@@ -1,4 +1,3 @@
-
 /* eslint-disable import/no-cycle */
 import Duration from "../../duration/Duration";
 import DateFilter from "../filters/DateFilter";

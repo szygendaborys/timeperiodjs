@@ -21,4 +21,6 @@ export default class Duration {
     public get inHours(): number {
         return this.inMinutes / 60;
     }
+
+    public static getDurationBetween = (from: Date, to: Date): Duration => new Duration(to.getTime() - from.getTime());
 }

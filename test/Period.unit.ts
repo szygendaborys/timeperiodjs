@@ -16,7 +16,7 @@ describe("Period unit tests", () => {
         expect(period).to.be.instanceOf(Period);
     });
 
-    it('', () => {
+    it('should be NaN', () => {
         const period = new Period(new Date('asd'), new Date());
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(period.start.getTime()).to.be.NaN;
