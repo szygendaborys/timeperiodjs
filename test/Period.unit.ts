@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import Period from "../dev/period/Period";
 import Duration from "../dev/duration/Duration";
 import PeriodDateSorter from "../dev/period/sorters/PeriodDateSorter";
-import { IPeriodOverlappingConf } from "../dev/period/interfaces/IPeriod";
 import { PeriodComparisonStatuses } from "../dev/period/PeriodConstants";
+import { IPeriodOverlappingConf } from "../dev/period/interfaces/confs/IPeriodOverlappingConf.interface";
 
 describe("Period unit tests", () => {
 
@@ -21,6 +21,32 @@ describe("Period unit tests", () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(period.start.getTime()).to.be.NaN;
     })
+
+    it('Should cut periods assignment', () => {
+        const mainPeriod = new Period(new Date(2020, 1, 15), new Date(2020, 3, 15));
+        const comparingPeriods = [
+            new Period(new Date(2020, 1, 1), new Date(2020, 11, 31)),
+            new Period(new Date(2020, 2, 1), new Date(2020, 2, 2)),
+            new Period(new Date(2020, 3, 1), new Date(2020, 4, 2))
+        ];
+
+        const result = mainPeriod.cutBoundaries(comparingPeriods);
+
+        expect(result).to.be.length(3);
+        expect(result[2].end.getTime()).to.be.equal(mainPeriod.end.getTime());
+    });
+
+    it('Should filter out and cut periods assignments', () => {
+        const mainPeriod = new Period(new Date(2020, 1, 15), new Date(2020, 3, 15));
+        const comparingPeriods = [
+            new Period(new Date(2020, 1, 1), new Date(2020, 11, 31)),
+            new Period(new Date(2020, 6, 1), new Date(2020, 7, 2)),
+        ];
+        const result = mainPeriod.cutBoundaries(comparingPeriods);
+
+        expect(result).to.be.length(1);
+        expect(result[0].start.getTime()).to.equal(mainPeriod.start.getTime());
+    });
 
     describe("Internal duration tests", () => {
 

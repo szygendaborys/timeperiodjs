@@ -20,4 +20,12 @@ export default class Period extends IPeriod implements PeriodDTO {
     return this._timeChanger;
   }
 
+  public set setStart(date: Date) {
+    this._start = new Date(date);
+  }
+
+  public set setEnd(date: Date) {
+    this._end = new Date(date);
+  }
+
 }

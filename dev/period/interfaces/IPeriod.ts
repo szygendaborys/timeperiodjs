@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/no-cycle */
 import Duration from "../../duration/Duration";
 import DateFilter from "../filters/DateFilter";
@@ -5,6 +6,7 @@ import Period from "../Period";
 import { PeriodComparisonStatuses } from "../PeriodConstants";
 import PeriodTimeChanger from "../PeriodTimeChanger";
 import DateSorter from "../sorters/DateSorter";
+import { IPeriodOverlappingConf } from "./confs/IPeriodOverlappingConf.interface";
 import IPeriodComparison from "./IPeriodComparison";
 
 export interface PeriodDTO {
@@ -14,14 +16,10 @@ export interface PeriodDTO {
     change: PeriodTimeChanger;
 }
 
-export interface IPeriodOverlappingConf {
-    onlyFullOverlaps?: boolean
-}
-
 export default abstract class IPeriod {
-    protected readonly _start: Date;
+    protected _start: Date;
 
-    protected readonly _end: Date;
+    protected _end: Date;
 
     protected readonly _timeChanger: PeriodTimeChanger;
 
@@ -86,6 +84,14 @@ export default abstract class IPeriod {
         }
 
         return periodComparisonsDTO;
+    }
+
+    public cutBoundaries(periods: Period[]): Period[] {
+        return this.getOverlappingPeriods(periods).map(period => {
+            if (period._start < this._start) period.setStart = this._start;
+            if (period._end > this._end) period.setEnd = this._end;
+            return period;
+        });
     }
 
 }
