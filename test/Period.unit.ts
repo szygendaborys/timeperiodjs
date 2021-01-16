@@ -48,6 +48,16 @@ describe("Period unit tests", () => {
         expect(result[0].start.getTime()).to.equal(mainPeriod.start.getTime());
     });
 
+    it('Period should be of an appropriate format', () => {
+        const period = new Period(new Date(), new Date());
+        const period2 = new Period(new Date(), new Date('asd'));
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        expect(period.isValid).to.be.true;
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        expect(period2.isValid).to.be.false;
+    });
+
     describe("Internal duration tests", () => {
 
         it("the duration should be 0", () => {

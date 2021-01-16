@@ -25,6 +25,11 @@ export default class Period extends IPeriod implements PeriodDTO {
     return new PeriodFilter(this)
   }
 
+  public get isValid(): boolean {
+    /* eslint-disable no-restricted-globals */
+    return !(isNaN(this._start.getTime()) || isNaN(this._end.getTime()));
+  }
+
   public set setStart(date: Date) {
     this._start = new Date(date);
   }
