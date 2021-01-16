@@ -1,4 +1,5 @@
 import Duration from "../duration/Duration";
+import PeriodFilter from "./filters/PeriodFilter";
 import IPeriod, { PeriodDTO } from "./interfaces/IPeriod";
 import PeriodTimeChanger from "./PeriodTimeChanger";
 
@@ -18,6 +19,10 @@ export default class Period extends IPeriod implements PeriodDTO {
 
   public get change(): PeriodTimeChanger {
     return this._timeChanger;
+  }
+
+  public get filter(): PeriodFilter {
+    return new PeriodFilter(this)
   }
 
   public set setStart(date: Date) {

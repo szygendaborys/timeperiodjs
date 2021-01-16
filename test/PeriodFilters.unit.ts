@@ -67,4 +67,15 @@ describe("Period filter unit tests", () => {
         expect(result[0].start.getTime()).to.be.equal(basePeriod.start.getTime());
     });
 
+    it('Should return 2 periods (used .filter method from Period instance)', () => {
+        const periodsToFilter = [
+            periods[1], periods[5], periods[1]
+        ];
+
+        const result = basePeriod.filter.filterPeriods(periodsToFilter);
+
+        expect(result).to.be.length(2);
+    });
+
+
 });
