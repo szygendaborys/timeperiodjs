@@ -67,6 +67,7 @@ filter.filterPeriods(timePEriods2, conf); // returns periods that are withing th
 # <h3> Period </h3>
 
 Creates a new period instance. 
+
 `const period = new Period(new Date(), new Date());`
 
 * <b> period.start: Date / period.end: Date </b>
@@ -138,6 +139,7 @@ Creates a new period instance.
 # <h3> PeriodTimeChanger </h3>
 
 Creates an instance for the Period instance, which helps in extending, shortening the  particular period.
+
 `const change = new PeriodTimeChanger(from: Date, to: Date)`
 
 * <b> change.shortenPeriod(value: number, type?: TimeType, changeStartTime?: boolean): void </b>
@@ -152,6 +154,7 @@ TimeType: 'milliseconds' | 'seconds' | 'minutes' | 'hours' | 'days'
 # <h3> Duration </h3>
 
 Creates a duration instance.
+
 `const duration = new Duration(durationInMilliseconds: number)`
 
 * <b> inMilliseconds </b>
@@ -163,6 +166,7 @@ Returns an instance of the Duration class. Make a note this is a STATIC method, 
 # <h3> DateSorter </h3>
 
 Creates a DateSorter instance, which allows to sort the dates in ascending or in descending order.
+
 `const sorter = new DateSorter(dates: Date[])`
 
 * <b> sorter.sort(descending?: boolean): Date[] </b>
@@ -171,6 +175,7 @@ Creates a DateSorter instance, which allows to sort the dates in ascending or in
 # <h3> PeriodDateSorter </h3>
 
 Creates a PeriodDateSorter instance, which sorts periods based on the configuration of the method.
+
 `const sorter = new PeriodDateSorter(periods: Period[])`
 
 * <b> sorter.sort(descending?: boolean, byEndDate?: boolean) </b>
@@ -179,6 +184,7 @@ Creates a PeriodDateSorter instance, which sorts periods based on the configurat
 # <h3> DateFilter </h3>
 
 Creates a date filtering instance, which helps to filter unwanted dates.
+
 `const filter = new DateFilter(dates: Date[])
 
 * <b> filter.filterDuplicates(): Date[] </b>
@@ -187,6 +193,7 @@ Creates a date filtering instance, which helps to filter unwanted dates.
 # <h3> PeriodFilter </h3>
 
 Creates a new PeriodFilter instance, which help to filter out unwanted periods from an array.
+
 `const filter = new PeriodFilter(basePeriod: Period)`
 
 * <b> filter.filterPeriods(periods: Period[], conf?: IPeriodFilterConf): Period[] </b>
