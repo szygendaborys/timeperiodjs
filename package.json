@@ -1,10 +1,6 @@
 {
   "name": "timeperiodjs",
-  "version": "0.0.7",
-  "exports": {
-    "./period": "./",
-    "./duration": "./"
-  },
+  "version": "0.0.9",
   "description": "Time Period Library",
   "scripts": {
     "test": "mocha -r ts-node/register ./test/**/*.unit.ts",
@@ -25,11 +21,18 @@
   "keywords": [
     "time",
     "date",
-    "period"
+    "period",
+    "timemanagement",
+    "moment"
   ],
   "files": [
     "dist/**/*"
   ],
+  "homepage": "https://github.com/szygendaborys/timeperiodjs.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/szygendaborys/timeperiodjs.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Borys Szygenda",
