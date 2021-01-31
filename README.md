@@ -1,13 +1,11 @@
 
-//<p align="center"><img src="logo.png" /></p>
-
 <h1 align="center"> Timeperiod.js </h1>
 
-<p align="center"> The package, which helps to organize time ranges. </p>
+<p align="center"> The package, that helps to organize time ranges. </p>
 
 <hr/>
 
-<p> A common problem when working with periods (from - to) was always to sort, filter and manage these times properly and efficiently. This package is trying to solve (almost) each problem, when it comes to working with multiple periods of time. 
+<p> A common problem when working with periods (from - to) was always to sort, filter and manage these times properly and efficiently. This package is trying to solve (almost) every problem, when it comes to working with multiple periods of time. 
 The basic usage is presented below. </p>
 
 <h3> List of features </h3>
