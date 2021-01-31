@@ -3,6 +3,7 @@
       "target": "es2019",
       "module": "commonjs",
       "lib": ["es2020", "es2019"],
+      "rootDir": "dev",
       "declaration": true,
       "outDir": "dist",
       "strict": true,
@@ -17,7 +18,7 @@
     ],
     "include": [
       "**/dev/**/*.ts",
-      "**/test/**/*.ts",
+      // "**/test/**/*.ts",
       // etc
     ]
   }

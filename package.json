@@ -1,6 +1,10 @@
 {
   "name": "timeperiodjs",
-  "version": "0.0.2",
+  "version": "0.0.7",
+  "exports": {
+    "./period": "./",
+    "./duration": "./"
+  },
   "description": "Time Period Library",
   "scripts": {
     "test": "mocha -r ts-node/register ./test/**/*.unit.ts",
@@ -23,6 +27,10 @@
     "date",
     "period"
   ],
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Borys Szygenda",
   "license": "ISC",
